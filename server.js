@@ -1,49 +1,32 @@
 const express = require('express');
-const path = require('path');
-const mysql = require('mysql2');
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// Middlewares para procesar datos de formularios y servir archivos
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname));
 
-// Configuración de la Base de Datos (variables de entorno en Render)
-const db = mysql.createConnection({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'encuesta',
-  port: process.env.DB_PORT || 3306
-});
-
-db.connect((err) => {
-  if (err) {
-    console.error('Error al conectar a la base de datos:', err);
-  } else {
-    console.log('Conectado a la base de datos MySQL (encuesta)');
-  }
-});
-
-// Ruta para guardar la encuesta
+// RUTA POST: Procesa la encuesta, muestra el mensaje con emojis y redirige al regalo
 app.post('/api/encuesta', (req, res) => {
-  const { carrera, p2_instalaciones, p3_profesores, p4_laboratorios, p5_comentarios } = req.body;
+    const respuestas = req.body;
+    console.log("Respuestas recibidas:", respuestas);
 
-  const sql = `INSERT INTO respuestas (carrera, p2_instalaciones, p3_profesores, p4_laboratorios, p5_comentarios) 
-               VALUES (?, ?, ?, ?, ?)`;
-
-  db.query(sql, [carrera, p2_instalaciones, p3_profesores, p4_laboratorios, p5_comentarios], (err, result) => {
-    if (err) {
-      console.error('Error al insertar datos:', err);
-      return res.status(500).send('Error en el servidor al guardar la encuesta.');
-    }
-    // Redirige a la página de regalo tras guardar las respuestas
-    res.redirect('/regalo.html');
-  });
+    res.send(`
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 80vh; font-family: sans-serif; text-align: center; padding: 20px;">
+            <h1 style="color: #4f46e5; font-size: 2.2rem; margin-bottom: 15px;">¡Muchas gracias por responder! 🎉🥳</h1>
+            <p style="font-size: 1.2rem; color: #334155; margin-bottom: 10px;">Tus respuestas han sido registradas con éxito.</p>
+            <p style="font-size: 1rem; color: #64748b;">Serás redirigido a tu regalo en unos segundos... 🎁</p>
+            <script>
+                setTimeout(() => {
+                    window.location.href = '/regalo.html';
+                }, 2500);
+            </script>
+        </div>
+    `);
 });
 
+// Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`Servidor ejecutándose en el puerto ${PORT}`);
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
