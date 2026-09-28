@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encuesta UPVM - Itzel</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Encabezado con foto -->
+  <header class="header-profile">
+    <img src="foto.jpg" alt="Fotografía de Itzel" class="header-img">
+    <h1>Encuesta UPVM: La Cruda Realidad 🎓</h1>
+  </header>
+
+  <main class="form-container">
+    <form action="/api/encuesta" method="POST">
+      
+      <!-- Pregunta 1: Profesores -->
+      <div class="form-group">
+        <label for="p1">1. ¿Qué frase describe mejor a tus profesores esta semana?</label>
+        <select id="p1" name="p1_profesores" required>
+          <option value="">-- Selecciona una opción --</option>
+          <option value="Explican como deidades de la sabiduría">Explican súper bien y dan paz mental</option>
+          <option value="Asumen que ya nacimos sabiendo la materia">"Esto ya lo debieron ver en el kínder"</option>
+          <option value="Dejan tareas como si no tuviéramos vida social">Creen que su materia es la única que cursamos</option>
+          <option value="Se ausentan misteriosamente a la hora de clase">Llegan 20 minutos tarde pero exigen puntualidad</option>
+        </select>
+      </div>
+
+      <!-- Pregunta 2: Alumnos / Compañeros -->
+      <div class="form-group">
+        <label for="p2">2. Sinceridad ante todo: ¿Qué tipo de compañero de equipo eres?</label>
+        <select id="p2" name="p2_alumnos" required>
+          <option value="">-- Selecciona una opción --</option>
+          <option value="El que hace todo el proyecto">El acarreador del equipo (estrés al 100%)</option>
+          <option value="El que apoya pero se pierde">El que pregunta "﻿¿qué hay que hacer?" 10 minutos antes</option>
+          <option value="El que diseña la portada bonita">El diseñador de diapositivas y animaciones</option>
+          <option value="El fantasma">Pone para los refrescos pero no aparece en el grupo de WhatsApp</option>
+        </select>
+      </div>
+
+      <!-- Pregunta 3: Instalaciones / Internet -->
+      <div class="form-group">
+        <label for="p3">3. ¿Cuál es el mayor misterio sin resolver de la UPVM?</label>
+        <select id="p3" name="p3_instalaciones" required>
+          <option value="">-- Selecciona una opción --</option>
+          <option value="El Wi-Fi">El Wi-Fi que solo agarra si te paras en un pie bajo la luna llena</option>
+          <option value="Los contactos">Los contactos donde mágicamente ningún cargador embona bien</option>
+          <option value="Los baños">Saber a qué hora habrá papel en los baños</option>
+          <option value="Las bancas">Por qué las bancas están congeladas en la mañana y ardiendo a mediodía</option>
+        </select>
+      </div>
+
+      <!-- Pregunta 4: Exámenes y Evaluación -->
+      <div class="form-group">
+        <label for="p4">4. ¿Cómo te preparas mentalmente para un examen parcial?</label>
+        <select id="p4" name="p4_examenes" required>
+          <option value="">-- Selecciona una opción --</option>
+          <option value="Estudio con tiempo">Estudio con días de anticipación (modo estudiante modelo)</option>
+          <option value="Lloro y luego estudio">Un café concentrado y tutoriales de YouTube en velocidad 2x</option>
+          <option value="A la suerte">Aporto mi fe en el "Dios proveerá" y respondo al azar</option>
+          <option value="Aceptar el destino">Busco la tabla de equivalencias para ver si aún paso con 7.0</option>
+        </select>
+      </div>
+
+      <!-- Pregunta 5: La Cafetería o Comida -->
+      <div class="form-group">
+        <label for="p5">5. ¿Cuál es la verdadera fuente de energía del estudiante de la UPVM?</label>
+        <select id="p5" name="p5_comida" required>
+          <option value="">-- Selecciona una opción --</option>
+          <option value="Ganas de superación">El deseo genuino de graduarme y triunfar en la vida</option>
+          <option value="Tacos y maruchan">Los tacos de afuera y una maruchan</option>
+          <option value="Bebidas energéticas">Bebidas con cafeína pura fluyendo por mis venas</option>
+          <option value="Lágrimas de frustración">Las risas con los amigos entre clase y clase</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-submit">Enviar Respuestas y Reclamar Regalo 🎁</button>
+    </form>
+  </main>
+
+</body>
+</html>

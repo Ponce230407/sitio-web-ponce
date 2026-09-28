@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
+ 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sitio Web Personal - Itzel</title>
+  <title>¡Gracias! - Regalo UPVM</title>   
   <link rel="stylesheet" href="styles.css">
-  
   <style>
     * {
       box-sizing: border-box;
@@ -39,43 +38,38 @@
       object-fit: cover;
       border: 2px solid #3498db;
     }
-    .profile-card {
+    .gift-container {
       background: #fff;
-      padding: 25px;
+      padding: 30px;
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
       max-width: 600px;
       margin: 0 auto;
+      text-align: center;
     }
-    .profile-img {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #3498db;
-      margin-bottom: 15px;
+    .gift-icon {
+      font-size: 80px;
+      margin: 20px 0;
     }
-    h2 {
-      color: #2c3e50;
-      margin-bottom: 10px;
+    .coupon {
+      background-color: #e8f8f5;
+      border: 2px dashed #2ecc71;
+      padding: 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      color: #27ae60;
+      display: inline-block;
+      margin: 15px 0;
     }
     .btn {
       display: inline-block;
       background-color: #3498db;
       color: white;
-      padding: 12px 25px;
+      padding: 10px 20px;
       text-decoration: none;
       border-radius: 8px;
       font-weight: bold;
-      margin-top: 20px;
-      transition: background 0.3s;
-    }
-    .btn:hover {
-      background-color: #2980b9;
+      margin-top: 15px;
     }
   </style>
 </head>
@@ -84,19 +78,23 @@
   <!-- Encabezado con foto (Requisito 1) -->
   <header>
     <img src="foto.jpg" alt="Fotografía de Itzel" class="header-img">
-    <h1>Perfil Personal</h1>
+    <h1>¡Gracias por responder!</h1>
   </header>
 
-  <!-- Tarjeta con foto y datos personales -->
-  <div class="profile-card">
-    <img src="foto.jpg" alt="Fotografía de Itzel" class="profile-img">
-    <h2>Itzel</h2>
-    <p><strong>Carrera:</strong> Licenciatura en Información e Innovación Digital</p>
-    <p style="margin-top: 10px;">Bienvenido a mi sitio web. Ayúdame respondiendo una breve encuesta sobre la UPVM.</p>
+  <main class="gift-container">
+    <h2>¡Aquí tienes tu regalo! 🎁</h2>
+    <div class="gift-icon">🎉🎁🎈</div>
+    <p>Agradecemos tu tiempo para responder la encuesta sobre la UPVM.</p>
     
-    <!-- Botón hacia la encuesta (Requisito 2) -->
-    <a href="encuesta.html" class="btn">Ir a la Encuesta</a>
-  </div>
+    <div class="coupon">
+      CÓDIGO DE REGALO: UPVM-2026-DESCUENTO
+    </div>
+    
+    <p><small>Muestra este código en la cafetería universitaria para obtener una bebida gratis.</small></p>
+    
+    <br>
+    <a href="index.html" class="btn">Volver al Inicio</a>
+  </main>
 
 </body>
 </html>
