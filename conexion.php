@@ -1,10 +1,11 @@
 <?php
-// Si está en Railway/Render leerá estas, si no, usará localhost para tus pruebas locales
-$host = getenv('MYSQLHOST') ?: 'localhost';
-$user = getenv('MYSQLUSER') ?: 'root';
-$password = getenv('MYSQLPASSWORD') ?: '';
-$dbname = getenv('MYSQLDATABASE') ?: 'sistema';
-$port = getenv('MYSQLPORT') ?: '3306';
+// Render usa DB_HOST / DB_USER / DB_PASSWORD / DB_NAME
+// Si no existen, usa valores locales para pruebas.
+$host = getenv('DB_HOST') ?: getenv('MYSQLHOST') ?: 'localhost';
+$user = getenv('DB_USER') ?: getenv('MYSQLUSER') ?: 'root';
+$password = getenv('DB_PASSWORD') ?: getenv('MYSQLPASSWORD') ?: '';
+$dbname = getenv('DB_NAME') ?: getenv('MYSQLDATABASE') ?: 'sistema';
+$port = getenv('DB_PORT') ?: getenv('MYSQLPORT') ?: '3306';
 
 $conexion = new mysqli($host, $user, $password, $dbname, $port);
 
