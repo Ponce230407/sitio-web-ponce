@@ -1,7 +1,9 @@
 <?php
-include 'conexion.php';
-$sql = "SELECT * FROM productos WHERE activo = 1 ORDER BY id_producto DESC";
-$resultado = $conexion->query($sql);
+require __DIR__ . '/conexion.php';
+
+$sql = 'SELECT * FROM productos WHERE activo = TRUE ORDER BY id_producto DESC';
+$stmt = $conexion->query($sql);
+$productos = $stmt ? $stmt->fetchAll() : [];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -31,20 +33,20 @@ $resultado = $conexion->query($sql);
                 </tr>
             </thead>
             <tbody>
-                <?php if($resultado && $resultado->num_rows > 0): ?>
-                    <?php while($row = $resultado->fetch_assoc()): ?>
+                <?php if (!empty($productos)): ?>
+                    <?php foreach ($productos as $row): ?>
                     <tr>
-                        <td><?= $row['id_producto'] ?></td>
-                        <td><?= htmlspecialchars($row['nombre']) ?></td>
-                        <td><?= htmlspecialchars($row['descripcion']) ?></td>
-                        <td>$<?= number_format($row['precio'], 2) ?></td>
-                        <td><?= $row['stock'] ?></td>
+                        <td><?= htmlspecialchars((string) $row['id_producto']) ?></td>
+                        <td><?= htmlspecialchars((string) $row['nombre']) ?></td>
+                        <td><?= htmlspecialchars((string) $row['descripcion']) ?></td>
+                        <td>$<?= number_format((float) $row['precio'], 2) ?></td>
+                        <td><?= htmlspecialchars((string) $row['stock']) ?></td>
                         <td>
-                            <a href="producto_form.php?id=<?= $row['id_producto'] ?>" class="btn btn-warning btn-sm">Editar</a>
-                            <a href="producto_eliminar.php?id=<?= $row['id_producto'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar producto?')">Eliminar</a>
+                            <a href="producto_form.php?id=<?= (int) $row['id_producto'] ?>" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="producto_eliminar.php?id=<?= (int) $row['id_producto'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar producto?')">Eliminar</a>
                         </td>
                     </tr>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                 <?php else: ?>
                     <tr><td colspan="6" class="text-center text-muted">No hay productos disponibles</td></tr>
                 <?php endif; ?>

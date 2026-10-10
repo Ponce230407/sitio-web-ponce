@@ -1,32 +1,42 @@
 <?php
-include 'conexion.php';
+require __DIR__ . '/conexion.php';
 
-$id = $_GET['id'] ?? null;
-$producto = null;
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT) ?: null;
 
 if ($id) {
-    $stmt = $conexion->prepare("SELECT * FROM productos WHERE id_producto = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $producto = $stmt->get_result()->fetch_assoc();
+    $stmt = $conexion->prepare('SELECT * FROM productos WHERE id_producto = :id');
+    $stmt->execute(['id' => $id]);
+    $producto = $stmt->fetch();
+} else {
+    $producto = null;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre = $_POST['nombre'];
-    $descripcion = $_POST['descripcion'];
-    $precio = $_POST['precio'];
-    $stock = $_POST['stock'];
+    $nombre = trim((string)($_POST['nombre'] ?? ''));
+    $descripcion = trim((string)($_POST['descripcion'] ?? ''));
+    $precio = isset($_POST['precio']) ? (float) $_POST['precio'] : 0;
+    $stock = isset($_POST['stock']) ? (int) $_POST['stock'] : 0;
 
     if ($id) {
-        $stmt = $conexion->prepare("UPDATE productos SET nombre=?, descripcion=?, precio=?, stock=? WHERE id_producto=?");
-        $stmt->bind_param("ssdii", $nombre, $descripcion, $precio, $stock, $id);
+        $stmt = $conexion->prepare('UPDATE productos SET nombre = :nombre, descripcion = :descripcion, precio = :precio, stock = :stock WHERE id_producto = :id');
+        $stmt->execute([
+            'nombre' => $nombre,
+            'descripcion' => $descripcion,
+            'precio' => $precio,
+            'stock' => $stock,
+            'id' => $id,
+        ]);
     } else {
-        $stmt = $conexion->prepare("INSERT INTO productos (nombre, descripcion, precio, stock) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssdi", $nombre, $descripcion, $precio, $stock);
+        $stmt = $conexion->prepare('INSERT INTO productos (nombre, descripcion, precio, stock, activo) VALUES (:nombre, :descripcion, :precio, :stock, TRUE)');
+        $stmt->execute([
+            'nombre' => $nombre,
+            'descripcion' => $descripcion,
+            'precio' => $precio,
+            'stock' => $stock,
+        ]);
     }
 
-    $stmt->execute();
-    header("Location: productos.php");
+    header('Location: productos.php');
     exit();
 }
 ?>
@@ -49,20 +59,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <form method="POST">
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" name="nombre" class="form-control" value="<?= $producto['nombre'] ?? '' ?>" required>
+                        <input type="text" name="nombre" class="form-control" value="<?= htmlspecialchars($producto['nombre'] ?? '') ?>" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Descripción</label>
-                        <textarea name="descripcion" class="form-control"><?= $producto['descripcion'] ?? '' ?></textarea>
+                        <textarea name="descripcion" class="form-control"><?= htmlspecialchars($producto['descripcion'] ?? '') ?></textarea>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Precio ($)</label>
-                            <input type="number" step="0.01" name="precio" class="form-control" value="<?= $producto['precio'] ?? '' ?>" required>
+                            <input type="number" step="0.01" name="precio" class="form-control" value="<?= htmlspecialchars((string)($producto['precio'] ?? '')) ?>" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Stock</label>
-                            <input type="number" name="stock" class="form-control" value="<?= $producto['stock'] ?? '' ?>" required>
+                            <input type="number" name="stock" class="form-control" value="<?= htmlspecialchars((string)($producto['stock'] ?? '')) ?>" required>
                         </div>
                     </div>
                     <a href="productos.php" class="btn btn-secondary">Cancelar</a>

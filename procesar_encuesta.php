@@ -34,36 +34,30 @@ foreach ($opciones as $campo => $valoresPermitidos) {
     $respuestas[] = $respuesta;
 }
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-
 try {
     require_once __DIR__ . '/conexion.php';
 
-    $conexion->query("CREATE TABLE IF NOT EXISTS respuestas_encuesta (
-        id_respuesta INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        nombre_completo VARCHAR(150) NOT NULL,
-        p1_profesores VARCHAR(100) NOT NULL,
-        p2_alumnos VARCHAR(100) NOT NULL,
-        p3_instalaciones VARCHAR(100) NOT NULL,
-        p4_examenes VARCHAR(100) NOT NULL,
-        p5_comida VARCHAR(100) NOT NULL,
-        fecha_respuesta TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
-
-    $columnaNombre = $conexion->query("SHOW COLUMNS FROM respuestas_encuesta WHERE Field = 'nombre_completo'");
-    if ($columnaNombre->num_rows === 0) {
-        $conexion->query("ALTER TABLE respuestas_encuesta ADD COLUMN nombre_completo VARCHAR(150) NOT NULL DEFAULT '' AFTER id_respuesta");
-    }
+    $conexion->exec("
+        CREATE TABLE IF NOT EXISTS respuestas_encuesta (
+            id_respuesta INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+            nombre_completo VARCHAR(150) NOT NULL,
+            p1_profesores VARCHAR(100) NOT NULL,
+            p2_alumnos VARCHAR(100) NOT NULL,
+            p3_instalaciones VARCHAR(100) NOT NULL,
+            p4_examenes VARCHAR(100) NOT NULL,
+            p5_comida VARCHAR(100) NOT NULL,
+            fecha_respuesta TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )
+    ");
 
     $stmt = $conexion->prepare('INSERT INTO respuestas_encuesta (nombre_completo, p1_profesores, p2_alumnos, p3_instalaciones, p4_examenes, p5_comida) VALUES (?, ?, ?, ?, ?, ?)');
-    $stmt->bind_param('ssssss', $nombreCompleto, $respuestas[0], $respuestas[1], $respuestas[2], $respuestas[3], $respuestas[4]);
-    $stmt->execute();
+    $stmt->execute([$nombreCompleto, $respuestas[0], $respuestas[1], $respuestas[2], $respuestas[3], $respuestas[4]]);
 
     header('Location: regalo.html', true, 303);
     exit();
 } catch (Throwable $error) {
     error_log('Error al guardar la encuesta: ' . $error->getMessage());
     http_response_code(500);
-    echo '<!DOCTYPE html><html lang="es"><meta charset="UTF-8"><title>Error al guardar</title><body><p>No se pudieron guardar tus respuestas. Verifica que MySQL esté activo e inténtalo de nuevo.</p><a href="encuesta.html">Volver a encuesta</a></body></html>';
+    echo '<!DOCTYPE html><html lang="es"><meta charset="UTF-8"><title>Error al guardar</title><body><p>No se pudieron guardar tus respuestas. Verifica que PostgreSQL esté activo e inténtalo de nuevo.</p><a href="encuesta.html">Volver a encuesta</a></body></html>';
 }
 ?>

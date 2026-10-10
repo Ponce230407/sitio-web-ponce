@@ -1,14 +1,13 @@
 <?php
-include 'conexion.php';
+require __DIR__ . '/conexion.php';
 
-$id = $_GET['id'] ?? null;
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT) ?: null;
 
 if ($id) {
-    $stmt = $conexion->prepare("UPDATE productos SET activo = 0 WHERE id_producto = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
+    $stmt = $conexion->prepare('UPDATE productos SET activo = FALSE WHERE id_producto = :id');
+    $stmt->execute(['id' => $id]);
 }
 
-header("Location: productos.php");
+header('Location: productos.php');
 exit();
 ?>
