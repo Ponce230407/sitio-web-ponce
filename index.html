@@ -7,7 +7,12 @@
   <link rel="stylesheet" href="styles.css">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; color: #333; padding: 20px; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f9;
+      color: #333;
+      padding: 20px;
+    }
     .profile-card {
       background: #fff;
       padding: 25px;
@@ -24,6 +29,29 @@
     h2 { color: #2c3e50; margin-bottom: 10px; }
     .btn { display: inline-block; background-color: #3498db; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 20px; }
     .btn:hover { background-color: #2980b9; }
+    .btn-video {
+      display: inline-block;
+      background-color: #e74c3c;
+      color: white;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 20px;
+      margin-left: 10px;
+    }
+    .btn-video:hover { background-color: #c0392b; }
+    .video-container {
+      margin-top: 25px;
+      width: 100%;
+      max-width: 700px;
+      display: none;
+    }
+    video {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
   </style>
 </head>
 <body>
@@ -37,8 +65,18 @@
     <h2>Itzel</h2>
     <p><strong>Carrera:</strong> Licenciatura en Información e Innovación Digital</p>
     <p style="margin-top: 10px;">Bienvenido a mi sitio web. Ayúdame respondiendo una breve encuesta sobre la UPVM.</p>
-    <a href="encuesta.html" class="btn">Ir a la Encuesta</a>
-    <a href="productos.php" class="btn" style="background-color: #27ae60; margin-left: 10px;">Ver Productos</a>
+    <div>
+      <a href="encuesta.html" class="btn">Ir a la Encuesta</a>
+      <a href="productos.php" class="btn" style="background-color: #27ae60; margin-left: 10px;">Ver Productos</a>
+      <button class="btn-video" onclick="document.getElementById('videoPlayer').style.display='block'">Ver video</button>
+    </div>
+
+    <div id="videoPlayer" class="video-container">
+      <video controls>
+        <source src="Video.mp4" type="video/mp4">
+        Tu navegador no soporta reproducción de video.
+      </video>
+    </div>
   </div>
 
   <script>
