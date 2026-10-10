@@ -84,7 +84,7 @@
     <details>
         <summary>Ir a</summary>
         <div class="crud-menu-links">
-            <a href="../Foto/ubicaci%C3%B3n.html">Ubicación</a>
+            <a href="../ubicacion.html">Ubicación</a>
             <a href="productos.php">CRUD de productos</a>
             <a href="../Foto/public/encuesta.html">Encuesta</a>
         </div>

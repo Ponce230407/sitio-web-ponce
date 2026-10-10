@@ -1,22 +1,14 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// Si está en Railway/Render leerá estas, si no, usará localhost para tus pruebas locales
+$host = getenv('MYSQLHOST') ?: 'localhost';
+$user = getenv('MYSQLUSER') ?: 'root';
+$password = getenv('MYSQLPASSWORD') ?: '';
+$dbname = getenv('MYSQLDATABASE') ?: 'sistema';
+$port = getenv('MYSQLPORT') ?: '3306';
 
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db   = "sistema"; // Apunta a la nueva base de datos "sistema"
-
-// 1. Conectar a MySQL
-$conexion = new mysqli($host, $user, $pass, $db);
+$conexion = new mysqli($host, $user, $password, $dbname, $port);
 
 if ($conexion->connect_error) {
-    die("Error de conexión local: " . $conexion->connect_error);
+    die("Conexión fallida: " . $conexion->connect_error);
 }
-
-// Configurar juego de caracteres a utf8mb4
-$conexion->set_charset("utf8mb4");
-
-// NOTA: No dejamos ninguna salida 'echo' para evitar interferir con la carga HTML o JSON de otras páginas.
 ?>
