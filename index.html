@@ -38,12 +38,14 @@
     <p><strong>Carrera:</strong> Licenciatura en Información e Innovación Digital</p>
     <p style="margin-top: 10px;">Bienvenido a mi sitio web. Ayúdame respondiendo una breve encuesta sobre la UPVM.</p>
     <a href="encuesta.html" class="btn">Ir a la Encuesta</a>
+    <a href="productos.php" class="btn" style="background-color: #27ae60; margin-left: 10px;">Ver Productos</a>
   </div>
 
   <script>
     fetch('nav.html')
       .then(res => res.text())
-      .then(data => document.getElementById('nav-placeholder').innerHTML = data);
+      .then(data => document.getElementById('nav-placeholder').innerHTML = data)
+      .catch(err => console.log('Nav no disponible'));
   </script>
 </body>
 </html>

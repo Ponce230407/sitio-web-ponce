@@ -37,7 +37,7 @@ foreach ($opciones as $campo => $valoresPermitidos) {
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 try {
-    require_once __DIR__ . '/../../CRUD/conexion.php';
+    require_once __DIR__ . '/conexion.php';
 
     $conexion->query("CREATE TABLE IF NOT EXISTS respuestas_encuesta (
         id_respuesta INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -59,10 +59,11 @@ try {
     $stmt->bind_param('ssssss', $nombreCompleto, $respuestas[0], $respuestas[1], $respuestas[2], $respuestas[3], $respuestas[4]);
     $stmt->execute();
 
-    header('Location: /Foto/public/regalo.html', true, 303);
+    header('Location: regalo.html', true, 303);
     exit();
 } catch (Throwable $error) {
     error_log('Error al guardar la encuesta: ' . $error->getMessage());
     http_response_code(500);
-    echo '<!DOCTYPE html><html lang="es"><meta charset="UTF-8"><title>Error al guardar</title><body><p>No se pudieron guardar tus respuestas. Verifica que MySQL esté activo e inténtalo de nuevo.</p><a href="encuesta.html">Volver a la encuesta</a></body></html>';
+    echo '<!DOCTYPE html><html lang="es"><meta charset="UTF-8"><title>Error al guardar</title><body><p>No se pudieron guardar tus respuestas. Verifica que MySQL esté activo e inténtalo de nuevo.</p><a href="encuesta.html">Volver a encuesta</a></body></html>';
 }
+?>

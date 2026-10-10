@@ -78,15 +78,16 @@
 
 <nav class="crud-menu" aria-label="Navegación principal">
     <a class="crud-menu-brand" href="productos.php">
-        <img class="crud-menu-photo" src="../Foto/public/foto.jpg" alt="Fotografía de Itzel">
+        <img class="crud-menu-photo" src="foto.jpg" alt="Fotografía de Itzel">
         <span>App Web</span>
     </a>
     <details>
         <summary>Ir a</summary>
         <div class="crud-menu-links">
-            <a href="../ubicacion.html">Ubicación</a>
+            <a href="ubicacion.html">Ubicación</a>
             <a href="productos.php">CRUD de productos</a>
-            <a href="../Foto/public/encuesta.html">Encuesta</a>
+            <a href="encuesta.html">Encuesta</a>
+            <a href="index.html">Inicio</a>
         </div>
     </details>
 </nav>

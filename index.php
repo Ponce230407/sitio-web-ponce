@@ -1,5 +1,5 @@
 <?php
-// Redirige directamente al catálogo de productos
-header("Location: CRUD/productos.php");
+// Redirige directamente a la página principal HTML
+header("Location: index.html");
 exit();
 ?>

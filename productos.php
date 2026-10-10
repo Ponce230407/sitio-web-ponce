@@ -7,6 +7,7 @@ $resultado = $conexion->query($sql);
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo de Productos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -30,21 +31,26 @@ $resultado = $conexion->query($sql);
                 </tr>
             </thead>
             <tbody>
-                <?php while($row = $resultado->fetch_assoc()): ?>
-                <tr>
-                    <td><?= $row['id_producto'] ?></td>
-                    <td><?= htmlspecialchars($row['nombre']) ?></td>
-                    <td><?= htmlspecialchars($row['descripcion']) ?></td>
-                    <td>$<?= number_format($row['precio'], 2) ?></td>
-                    <td><?= $row['stock'] ?></td>
-                    <td>
-                        <a href="producto_form.php?id=<?= $row['id_producto'] ?>" class="btn btn-warning btn-sm">Editar</a>
-                        <a href="producto_eliminar.php?id=<?= $row['id_producto'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar producto?')">Eliminar</a>
-                    </td>
-                </tr>
-                <?php endwhile; ?>
+                <?php if($resultado && $resultado->num_rows > 0): ?>
+                    <?php while($row = $resultado->fetch_assoc()): ?>
+                    <tr>
+                        <td><?= $row['id_producto'] ?></td>
+                        <td><?= htmlspecialchars($row['nombre']) ?></td>
+                        <td><?= htmlspecialchars($row['descripcion']) ?></td>
+                        <td>$<?= number_format($row['precio'], 2) ?></td>
+                        <td><?= $row['stock'] ?></td>
+                        <td>
+                            <a href="producto_form.php?id=<?= $row['id_producto'] ?>" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="producto_eliminar.php?id=<?= $row['id_producto'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar producto?')">Eliminar</a>
+                        </td>
+                    </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr><td colspan="6" class="text-center text-muted">No hay productos disponibles</td></tr>
+                <?php endif; ?>
             </tbody>
         </table>
+        <a href="index.html" class="btn btn-secondary mt-3">Volver al Inicio</a>
     </div>
 </body>
 </html>
