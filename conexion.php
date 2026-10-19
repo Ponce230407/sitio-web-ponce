@@ -1,13 +1,30 @@
 <?php
 // Render usa DB_HOST / DB_USER / DB_PASSWORD / DB_NAME / DB_PORT
+// Railway puede enviar DATABASE_URL o un URL de MySQL.
 // Si no existen, usa valores locales para pruebas.
-$host = getenv('DB_HOST') ?: 'localhost';
-$port = getenv('DB_PORT') ?: '3306';
-$dbname = getenv('DB_NAME') ?: 'sitio_web';
-$user = getenv('DB_USER') ?: 'root';
-$password = getenv('DB_PASSWORD') ?: '';
-$charset = 'utf8mb4';
 
+$databaseUrl = getenv('DATABASE_URL')
+    ?: getenv('DB_URL')
+    ?: getenv('MYSQL_URL')
+    ?: getenv('MYSQLDATABASE_URL')
+    ?: getenv('RAILWAY_DB_URL');
+
+if ($databaseUrl) {
+    $parsedUrl = parse_url($databaseUrl);
+    $host = $parsedUrl['host'] ?? getenv('DB_HOST') ?: 'localhost';
+    $port = $parsedUrl['port'] ?? getenv('DB_PORT') ?: '3306';
+    $dbname = ltrim($parsedUrl['path'] ?? '/sitio_web', '/');
+    $user = $parsedUrl['user'] ?? getenv('DB_USER') ?: 'root';
+    $password = $parsedUrl['pass'] ?? getenv('DB_PASSWORD') ?: '';
+} else {
+    $host = getenv('DB_HOST') ?: 'localhost';
+    $port = getenv('DB_PORT') ?: '3306';
+    $dbname = getenv('DB_NAME') ?: 'sitio_web';
+    $user = getenv('DB_USER') ?: 'root';
+    $password = getenv('DB_PASSWORD') ?: '';
+}
+
+$charset = 'utf8mb4';
 $dsn = "mysql:host={$host};port={$port};dbname={$dbname};charset={$charset}";
 
 try {
